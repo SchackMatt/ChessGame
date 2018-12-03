@@ -16,7 +16,9 @@ CREATE TABLE valid_moves
 	 game_board_slot_id INTEGER NOT NULL,
 	 valid_move_start_pos INTEGER NOT NULL,
 	 valid_move_end_pos INTEGER NOT NULL,
-	 valid_move_oob_slot BOOLEAN NOT NULL);
+	 valid_move_oob_slot BOOLEAN NOT NULL),
+	 out_of_bounds_id INTEGER NOT NULL
+	 		REFERENCES out_of_bounds (out_of_bounds_id));
 
 CREATE TABLE move
 	(move_id INTEGER NOT NULL PRIMARY KEY,
@@ -74,3 +76,10 @@ CREATE TABLE player
 	 		REFERENCES move (move_id),
 	 valid_move_id INTEGER NOT NULL
 	 		REFERENCES valid_move( valid_move_id));
+
+CREATE TABLE out_of_bounds
+   	(out_of_bounds_id INTEGER NOT NULL PRIMARY KEY,
+   	 valid_move_id INTEGER NOT NULL
+            	REFERENCES valid_moves (valid_move_id),
+    	 game_board_out_of_bounds BOOLEAN NOT NULL
+            	REFERENCES game_board (game_board_out_of_bounds));
